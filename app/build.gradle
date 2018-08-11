@@ -1,0 +1,88 @@
+apply plugin: 'com.android.application'
+
+apply plugin: 'kotlin-android'
+
+apply plugin: 'kotlin-android-extensions'
+
+android {
+    compileSdkVersion 27
+    defaultConfig {
+        applicationId "cbedoy.wthamf"
+        minSdkVersion 23
+        targetSdkVersion 27
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+
+        buildTypes.each {
+            it.buildConfigField 'String', 'PUB_NUB_PUBLISH_KEY', '"pub-c-ea2dfa6a-d934-4d27-8d63-2bd5e7e8cd8e"'
+            it.buildConfigField 'String', 'PUB_NUB_SUBSCRIPTION_KEY', '"sub-c-e6ad35c0-9d20-11e8-a2b8-bebe9493d04b"'
+            it.buildConfigField 'String', 'PUB_NUB_SECRET_KEY', '"sec-c-YTIzZmQ0ZTUtNjZjYi00MThiLTg0YTQtOTI5NzEzMmZiMTAy"'
+            it.buildConfigField 'String', 'MAPBOX_KEY', '"pk.eyJ1IjoiY2FybG9zYmVkb3kiLCJhIjoiY2prb3l5c2NmMGkydTNxbnptN3N3eXJqbyJ9.IIFPMP0ih8CR0-dqMqkKVw"'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    dexOptions {
+        jumboMode = true
+        javaMaxHeapSize "4g" // 2g should be also OK
+    }
+
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
+
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES.txt'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/notice.txt'
+        exclude 'META-INF/license.txt'
+        exclude 'META-INF/dependencies.txt'
+        exclude 'META-INF/LGPL2.1'
+        exclude 'META-INF/rxjava.properties'
+    }
+
+    lintOptions {
+        checkReleaseBuilds false
+    }
+
+    androidExtensions {
+        experimental = true
+    }
+
+    configurations.all {
+        resolutionStrategy.force 'com.google.code.findbugs:jsr305:1.3.9'
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation"org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+    implementation 'com.android.support:appcompat-v7:27.1.1'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.2'
+    implementation 'com.patloew.rxlocation:rxlocation:1.0.5'
+    implementation 'com.google.android.gms:play-services-location:15.0.1'
+    implementation 'io.reactivex.rxjava2:rxandroid:2.0.2'
+    implementation 'io.reactivex.rxjava2:rxjava:2.2.0'
+    implementation 'com.pubnub:pubnub-gson:4.19.0'
+    implementation 'com.jakewharton.timber:timber:4.7.1'
+    implementation 'com.mapbox.mapboxsdk:mapbox-android-sdk:6.3.0'
+    implementation 'com.mapbox.mapboxsdk:mapbox-android-plugin-locationlayer:0.7.1'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+}
